@@ -1,43 +1,36 @@
 package DSA.Linked_List_Basic_Problem;
-public class Linked_List_Insert_at_a_position {
+
+public class Join_two_Linked_List {
     public static void main(String[] args) {
-        LinkedList list = new LinkedList();
-        list.add(1);
-        list.add(3);
-        list.PrintList();
+        LinkedList list1 = new LinkedList();
+        list1.add(1);
+        list1.add(2);
+        list1.add(5);
 
-        insertAtPosition(list, 2, 1);
-        list.PrintList();
 
-        insertAtPosition(list, 4, 3);
-        list.PrintList();
+        LinkedList list2 = new LinkedList();
+        list2.add(3);
+        list2.add(4);
 
-        insertAtPosition(list, 5, 4);
-        list.PrintList();
+        merge(list1, list2);
 
-        insertAtPosition(list, 10, 1);
-        list.PrintList();
+        list1.PrintList();
+
     }
 
-    public static void insertAtPosition(LinkedList list,int num, int pos){
-        Node iNode = new Node(num);
-        Node curr = list.head;
-        int index = 1;
-
-        while (curr != null && curr.next != null && index != pos) {
-            curr = curr.next;
-            index++;
-        }
-       
-        if (index < pos) {
-            System.out.println("Cannot insert at the given position");
+    public static void merge(LinkedList list1, LinkedList list2){
+        if (list1.head == null) {
+            list1.head = list2.head;
             return;
         }
 
-        Node next = curr.next;
-        curr.next = iNode;
-        iNode.next = next;
+        Node curr = list1.head;
 
+        while (curr.next != null) {
+            curr = curr.next;
+        }
+
+        curr.next = list2.head;
     }
 
     //Linked List class
@@ -54,7 +47,7 @@ public class Linked_List_Insert_at_a_position {
             Node iNode = new Node(num);
 
             if (head == null) {
-                head = point = iNode;
+                head =point = iNode;
                 return;
             }
 
@@ -64,12 +57,10 @@ public class Linked_List_Insert_at_a_position {
 
         public void PrintList(){
             Node curr = head;
-
             while (curr != null) {
                 System.out.print(curr.data +" -> ");
                 curr = curr.next;
             }
-
             System.out.println("Null");
         }
     }

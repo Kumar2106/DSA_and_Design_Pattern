@@ -1,51 +1,39 @@
-package DSA.Linked_List_Basic_Problem;
-public class Linked_List_Insert_at_a_position {
+package DSA.Circular_Linked_List_Basic_Problem;
+public class Circular_Linked_List_head_insert {
     public static void main(String[] args) {
-        LinkedList list = new LinkedList();
+        CircularLinkedList list = new CircularLinkedList();
         list.add(1);
+        list.add(2);
         list.add(3);
+        list.add(4);
         list.PrintList();
 
-        insertAtPosition(list, 2, 1);
+        insertAtHead(list, 10);
         list.PrintList();
 
-        insertAtPosition(list, 4, 3);
+        insertAtHead(list, 20);
         list.PrintList();
 
-        insertAtPosition(list, 5, 4);
-        list.PrintList();
-
-        insertAtPosition(list, 10, 1);
-        list.PrintList();
     }
 
-    public static void insertAtPosition(LinkedList list,int num, int pos){
+    public static void insertAtHead(CircularLinkedList list, int num){
         Node iNode = new Node(num);
-        Node curr = list.head;
-        int index = 1;
 
-        while (curr != null && curr.next != null && index != pos) {
-            curr = curr.next;
-            index++;
-        }
-       
-        if (index < pos) {
-            System.out.println("Cannot insert at the given position");
-            return;
-        }
-
-        Node next = curr.next;
-        curr.next = iNode;
+        Node next = list.head.next;
+        list.head.next = iNode;
         iNode.next = next;
 
+        int temp = list.head.data;
+        list.head.data = list.head.next.data;
+        list.head.next.data = temp;
     }
 
-    //Linked List class
-    public static class LinkedList{
+    //CircularLinkedList class
+    public static class CircularLinkedList{
         Node head;
         Node point;
 
-        LinkedList(){
+        CircularLinkedList(){
             this.head = null;
             this.point = null;
         }
@@ -55,22 +43,30 @@ public class Linked_List_Insert_at_a_position {
 
             if (head == null) {
                 head = point = iNode;
+                head.next = head;
                 return;
             }
 
+            Node next = point.next;
             point.next = iNode;
+            iNode.next = next;
             point = point.next;
         }
 
         public void PrintList(){
             Node curr = head;
 
-            while (curr != null) {
-                System.out.print(curr.data +" -> ");
-                curr = curr.next;
+            if (curr == null) {
+                System.out.println("Circular Linked List empty");
+                return;
             }
 
-            System.out.println("Null");
+            do{
+                System.out.print(curr.data +" -> ");
+                curr = curr.next;
+            }while(curr != head);
+
+            System.out.println("Head");
         }
     }
 

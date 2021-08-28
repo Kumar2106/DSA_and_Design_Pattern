@@ -1,46 +1,49 @@
 package DSA.Linked_List_Basic_Problem;
-public class Linked_List_Insert_at_a_position {
+
+public class Insert_in_Sorted_list {
     public static void main(String[] args) {
         LinkedList list = new LinkedList();
         list.add(1);
+        list.add(2);
         list.add(3);
+        list.add(4);
+        list.add(5);
         list.PrintList();
 
-        insertAtPosition(list, 2, 1);
+        sortedInsertion(list, 11);
         list.PrintList();
 
-        insertAtPosition(list, 4, 3);
+        sortedInsertion(list, 1);
         list.PrintList();
 
-        insertAtPosition(list, 5, 4);
+        sortedInsertion(list, 6);
         list.PrintList();
 
-        insertAtPosition(list, 10, 1);
+        sortedInsertion(list, 7);
         list.PrintList();
     }
 
-    public static void insertAtPosition(LinkedList list,int num, int pos){
+    public static void sortedInsertion(LinkedList list, int num){
         Node iNode = new Node(num);
-        Node curr = list.head;
-        int index = 1;
 
-        while (curr != null && curr.next != null && index != pos) {
-            curr = curr.next;
-            index++;
-        }
-       
-        if (index < pos) {
-            System.out.println("Cannot insert at the given position");
+        if (list.head.data > num) {
+            iNode.next = list.head;
+            list.head = iNode;
             return;
+        }
+
+        Node curr = list.head;
+
+        while (curr != null && curr.next != null && curr.data < num && curr.next.data < num) {
+            curr = curr.next;
         }
 
         Node next = curr.next;
         curr.next = iNode;
-        iNode.next = next;
-
+        iNode.next =next;
     }
 
-    //Linked List class
+    //LinkedList class
     public static class LinkedList{
         Node head;
         Node point;
@@ -54,7 +57,7 @@ public class Linked_List_Insert_at_a_position {
             Node iNode = new Node(num);
 
             if (head == null) {
-                head = point = iNode;
+                head =point = iNode;
                 return;
             }
 
@@ -69,7 +72,6 @@ public class Linked_List_Insert_at_a_position {
                 System.out.print(curr.data +" -> ");
                 curr = curr.next;
             }
-
             System.out.println("Null");
         }
     }

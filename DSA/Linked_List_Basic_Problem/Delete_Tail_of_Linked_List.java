@@ -1,43 +1,49 @@
 package DSA.Linked_List_Basic_Problem;
-public class Linked_List_Insert_at_a_position {
+
+public class Delete_Tail_of_Linked_List {
     public static void main(String[] args) {
         LinkedList list = new LinkedList();
-        list.add(1);
-        list.add(3);
+        list.add(2);
+        list.add(5);
+        list.add(7);
+        list.add(8);
+        list.add(99);
+        list.add(100);
         list.PrintList();
 
-        insertAtPosition(list, 2, 1);
+        deleteTail(list);
         list.PrintList();
 
-        insertAtPosition(list, 4, 3);
+        deleteTail(list);
         list.PrintList();
 
-        insertAtPosition(list, 5, 4);
+        deleteTail(list);
         list.PrintList();
 
-        insertAtPosition(list, 10, 1);
+        deleteTail(list);
+        list.PrintList();
+
+        deleteTail(list);
+        list.PrintList();
+
+        deleteTail(list);
+        list.PrintList();
+
+        deleteTail(list);
         list.PrintList();
     }
-
-    public static void insertAtPosition(LinkedList list,int num, int pos){
-        Node iNode = new Node(num);
-        Node curr = list.head;
-        int index = 1;
-
-        while (curr != null && curr.next != null && index != pos) {
-            curr = curr.next;
-            index++;
-        }
-       
-        if (index < pos) {
-            System.out.println("Cannot insert at the given position");
+    public static void deleteTail(LinkedList list){
+        if (list.head == null ||list.head.next == null) {
+            list.head = null;
             return;
         }
 
-        Node next = curr.next;
-        curr.next = iNode;
-        iNode.next = next;
+        Node curr = list.head;
 
+        while (curr.next.next != null) {
+            curr = curr.next;
+        }
+        curr.next = null;
     }
 
     //Linked List class
@@ -69,7 +75,6 @@ public class Linked_List_Insert_at_a_position {
                 System.out.print(curr.data +" -> ");
                 curr = curr.next;
             }
-
             System.out.println("Null");
         }
     }

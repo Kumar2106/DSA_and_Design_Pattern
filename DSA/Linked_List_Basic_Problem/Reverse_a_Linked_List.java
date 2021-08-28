@@ -1,43 +1,32 @@
 package DSA.Linked_List_Basic_Problem;
-public class Linked_List_Insert_at_a_position {
+
+public class Reverse_a_Linked_List {
     public static void main(String[] args) {
         LinkedList list = new LinkedList();
         list.add(1);
+        list.add(2);
         list.add(3);
+        list.add(4);
+        list.add(5);
+        list.add(6);
         list.PrintList();
 
-        insertAtPosition(list, 2, 1);
-        list.PrintList();
-
-        insertAtPosition(list, 4, 3);
-        list.PrintList();
-
-        insertAtPosition(list, 5, 4);
-        list.PrintList();
-
-        insertAtPosition(list, 10, 1);
+        reverse(list);
         list.PrintList();
     }
 
-    public static void insertAtPosition(LinkedList list,int num, int pos){
-        Node iNode = new Node(num);
+    public static void reverse(LinkedList list){
         Node curr = list.head;
-        int index = 1;
+        Node prev = null;
 
-        while (curr != null && curr.next != null && index != pos) {
-            curr = curr.next;
-            index++;
-        }
-       
-        if (index < pos) {
-            System.out.println("Cannot insert at the given position");
-            return;
+        while(curr != null){
+            Node next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
         }
 
-        Node next = curr.next;
-        curr.next = iNode;
-        iNode.next = next;
-
+        list.head = prev;
     }
 
     //Linked List class
@@ -69,7 +58,6 @@ public class Linked_List_Insert_at_a_position {
                 System.out.print(curr.data +" -> ");
                 curr = curr.next;
             }
-
             System.out.println("Null");
         }
     }
@@ -81,7 +69,7 @@ public class Linked_List_Insert_at_a_position {
 
         Node(int num){
             this.data = num;
-            next = null;
+            next= null;
         }
     }
 }
