@@ -4,7 +4,7 @@ import java.util.*;
 class Hello {
     public static void main(String[] args){
         String act = "edsab";
-       System.out.println(act.charAt(0)-'a');
+        System.out.println(2%4);
         
 
     }
