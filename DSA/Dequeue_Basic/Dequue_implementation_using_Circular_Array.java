@@ -1,4 +1,4 @@
-package DSA.Dequeue;
+package DSA.Dequeue_Basic;
 
 public class Dequue_implementation_using_Circular_Array {
     public static void main(String[] args) {

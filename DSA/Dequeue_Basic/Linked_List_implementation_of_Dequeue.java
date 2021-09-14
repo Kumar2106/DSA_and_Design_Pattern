@@ -1,4 +1,4 @@
-package DSA.Dequeue;
+package DSA.Dequeue_Basic;
 public class Linked_List_implementation_of_Dequeue {
     public static void main(String[] args) {
         Dequeue dequeue = new Dequeue();
