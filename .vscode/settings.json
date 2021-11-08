@@ -2,5 +2,7 @@
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
         "c:\\Users\\ka099\\Downloads\\jar_files\\json-20210307.jar"
-    ]
+    ],
+    "code-builder.inputFilePath": "e:\\java\\input.txt",
+    "code-builder.outputFilePath": "e:\\java\\output.txt"
 }
