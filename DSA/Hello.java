@@ -4,12 +4,9 @@ import java.util.*;
 
 public class Hello {
     public static void main(String[] args) throws IOException {
-		int matrix[][] = {{1,2,3,4},
-							{5,6,7,8},
-							{9,10,11,12},
-							{13,14,15,16}};
-		System.out.println(findMinOperation(matrix, matrix.length));
-		
+		int arr[] = {10 ,20 ,30 ,40 ,10};
+		int n = arr.length;
+		System.out.print(countNonRepeated(arr, n));
 
     }
 
@@ -152,6 +149,8 @@ public class Hello {
 
 	static int findMinOperation(int matrix[][], int n){
 
+		System.out.print("Inside the find Min operation");
+
 		//Initialize the sumRow[]
 		//and sumCol[] array to 0
 
@@ -160,8 +159,10 @@ public class Hello {
 
 		//calculate sumRow[] and 
 		//sumCol[] array
+		//loop 1
 		for(int i=0; i<n; i++){
 			for(int j=0; j<n; j++){
+				System.out.println("Inside loop 1");
 				sumCol[j] += matrix[i][j];
 				sumRow[i] += matrix[i][j];
 			}
@@ -169,8 +170,10 @@ public class Hello {
 
 		//Find maximum sum value
 		//in either row or in column
+		//loop 2
 		int maxSum =0;
 		for(int i=0; i<n; i++){
+			System.out.println("Inside loop 2");
 			maxSum = Math.max(maxSum, sumRow[i]);
 			maxSum = Math.max(maxSum, sumCol[i]);
 		}
@@ -214,6 +217,69 @@ public class Hello {
 
 		return count;
 	}
+
+	//search in row wise sorted and column wise sorted matrix
+
+	public static int matSearch(int mat[][], int N, int M, int X)
+    {
+        for(int i=0; i<N; i++){
+           
+           //Line 40 index out of bound 
+            if(X>=mat[i][i] || X<=mat[i][M-1]){
+               if(rowSearch(mat,i,M,X)){
+                   return 1;
+               } 
+            }else if(X>=mat[i][i] || X<=mat[N-1][i]){
+                if(columnSearch(mat,i,N,X)){
+                    return 1;
+                }
+            }
+            
+        }
+        return 0;
+    }
+    
+    // will search for the element in the row
+    static boolean rowSearch(int mat[][], int i,  int m, int x){
+        
+        for(int j=i; j<m; j++){
+            if(mat[i][j] ==x){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    //will search for the element in the column
+    static boolean columnSearch(int mat[][], int j, int n, int x){
+        for(int i=j; i<n; i++){
+            if(mat[i][j] == x){
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
+	//Count Non-Repeated Elements
+	static int countNonRepeated(int arr[], int n){
+		HashMap<Integer,Integer> map = new HashMap<>();
+
+		for(int i=0; i<n; i++){
+			map.put(arr[i], map.getOrDefault(arr[i], 0)+1);
+		}
+
+		int count =0;
+
+		for(Map.Entry entry: map.entrySet()){
+			if((int) entry.getValue() == 1){
+				count++;
+			}
+		}
+
+		return count;
+	}
+
 
 	
 }
