@@ -4,9 +4,10 @@ import java.util.*;
 
 public class Hello {
     public static void main(String[] args) throws IOException {
-		int arr[] = {10 ,20 ,30 ,40 ,10};
+		int arr[] ={1,0,0,1,0,1,1};
 		int n = arr.length;
-		System.out.print(countNonRepeated(arr, n));
+		System.out.println(countSubarrWithEqualZeroAndOneOptimized(arr, n));
+		
 
     }
 
@@ -280,6 +281,189 @@ public class Hello {
 		return count;
 	}
 
+	//Print Non-Repeated Elements
+	static void printNonRepeated(int arr[], int n){
+		HashMap<Integer,Integer> map = new HashMap<>();
 
+		for(int i=0; i<n; i++){
+			map.put(arr[i], map.getOrDefault(arr[i], 0)+1);
+		}
+
+		for(Map.Entry entry: map.entrySet()){
+			if((int) entry.getValue() == 1){
+				System.out.print(entry.getKey()+" ");
+			}
+		}
+
+		System.out.println("");
+	}
+
+
+	//Intersection of two Arrays
+
+	static int NumberofElementsInIntersection(int arra[],int arrb[], int n, int m){
+		Math.negateExact()
+
+		//n is the size of arra
+		//m is the size of arrb
+
+		if(n<=m){
+			HashSet<Integer> set = new HashSet<>();
+
+			for(int i=0; i<n;i++){
+				set.add(arra[i]);
+			}
+
+			int count =0;
+
+			for(int i=0; i<m; i++){
+				if(set.contains(arrb[i])){
+					count++;
+				}
+			}
+
+			return count;
+		}
+
+
+		HashSet<Integer> set = new HashSet<>();
+		for(int i=0; i<m; i++){
+			set.add(arrb[i]);
+		}
+
+		int count =0;
+
+		for(int i=0; i<n; i++){
+			if(set.contains(arra[i])){
+				count++;
+			}
+		}
+
+		
+
+		return count;
+
+	}
+
+	//count pairs with given sum
+	static int getPairsCount(int arr[], int n, int k){
+
+		HashMap<Integer,Integer> hm = new HashMap<>();
+		for(int i=0; i<n; i++){
+			if(!hm.containsKey(arr[i])){
+				hm.put(arr[i], 0);
+			}
+
+			hm.put(arr[i], hm.get(arr[i])+1);
+		}
+
+		int twice_count =0;
+
+		for(int i=0; i<n; i++){
+			Integer.toString(1);
+		}
+		return twice_count;
+	}
+
+	//Subarray with 0 sum
+	static boolean SubarrayExists(int arr[], int n){
+		HashSet<Integer> hs = new HashSet<>();
+
+		int sum =0;
+
+		for(int i=0; i<n; i++){
+			//Add current element to sum
+			sum+= arr[i];
+
+			//Return true in following cases
+			//a) current element is 0
+			//b) sum of elements from 0 to i is 0
+			//c) sum is already present in hash Map
+
+			if(arr[i] == 0 || sum == 0 || hs.contains(sum)){
+				return true;
+			}
+
+			hs.add(sum);
+		}
+
+		return false;
+	}
+
+	//BruteForce Approach
+	//Subarrays with equal 1 and 0
+	static int countSubarrWithEqualZeroAndOne(int arr[], int n){
+
+		//store the count of 0 
+		int count_0 =0;
+
+		//store the count of 1
+		int count_1 = 0;
+
+		//number of pairs
+		int pairs =0;
+
+		for(int i=0; i<n; i++){
+
+			for(int j=i; j<n; j++){
+				if(arr[j] == 1){
+					count_1++;
+				}
+
+				if(arr[j] == 0){
+					count_0++;
+				}
+
+				if(count_0 == count_1){
+					pairs++;
+				}
+			}
+
+			count_0=0;
+			count_1 =0;
+		}
+		return pairs;
+	}
+
+	//optimised approach of Count subarrays equal numbers of 1 and 0
+	// time:- o(n) space:- o(n)
+
+	static int countSubarrWithEqualZeroAndOneOptimized(int arr[], int n){
+		//um implemented as hash table to store
+		//frequency of values obtained through cumulative sum
+
+		Map<Integer,Integer> um = new HashMap<>();
+
+		int curr_sum =0;
+
+		//Traverse original array and compute cumulative
+		//sum and increase count by 1 for this sum
+		//in 'um'. Adds '-1' when arr[i] =0;
+
+		for(int i=0; i<n; i++){
+			curr_sum+= (arr[i] == 0)?-1:arr[i];
+			um.put(curr_sum, um.get(curr_sum)== null?1:um.get(curr_sum)+1);
+		}
+
+		int count =0;
+
+		//traverse the hash table 'um'
+		for(Map.Entry<Integer,Integer> itr: um.entrySet()){
+			
+			//if there are more than one prefix subarrays
+			//with a particular sum
+			if(itr.getValue()>1){
+				count+= ((itr.getValue()* (itr.getValue()-1))/2);
+			}
+		}
+
+		//add the subarrays starting from 1st element and 
+		//have equal number of 1's and 0's
+		if(um.containsKey(0))
+		count+=um.get(0);
+
+		//required count of subarrays
+		return count;
+	}
 	
 }
