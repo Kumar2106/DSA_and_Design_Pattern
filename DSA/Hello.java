@@ -4,9 +4,9 @@ import java.util.*;
 
 public class Hello {
     public static void main(String[] args) throws IOException {
-		int arr[] ={1,0,0,1,0,1,1};
-		int n = arr.length;
-		System.out.println(countSubarrWithEqualZeroAndOneOptimized(arr, n));
+		int arr[] ={2,6,1,9,4,5,3};
+		int N = arr.length;
+		System.out.print(findLongestConseqSubseq(arr, N));
 		
 
     }
@@ -465,5 +465,115 @@ public class Hello {
 		//required count of subarrays
 		return count;
 	}
+
+	//sort an array according to the other
+	public static void sortA1byA2_B(int arr1[], int n, int arr2[], int m){
+
+		//hashmap to store the frequency of the elements
+		LinkedHashMap<Integer,Integer> map = new LinkedHashMap();
+
+		for(int i=0; i<n; i++) {
+			map.put(arr1[i], map.getOrDefault(arr1[i], 0)+1);
+		}
+
+		int index =0;
+
+		for(int i=0; i<m; i++){
+			if(map.containsKey(arr2[i])){
+				
+				int freq = map.get(arr2[i]);
+
+				for(int j=0; j<freq; j++){
+					arr1[index++]= arr2[i];
+				}
+
+			}
+		}
+
+		for(Map.Entry entry: map.entrySet()){
+
+		}
+
+
+	}
+
+	static void printArray(int arr[], int size){
+		for(int i=0; i<size; i++){
+			System.out.print(arr[i] +" ");
+		}
+		System.out.println("");
+	}
+
+	//sorting elements of an Array by Frequency
+	//question link: https://practice.geeksforgeeks.org/problems/sorting-elements-of-an-array-by-frequency/0
+	//solution
+	private static void PrintFrequency(int arr[]){
+		ArrayList<Integer> list = new ArrayList<>();
+		
+		for(Integer in: arr){
+			list.add(in);
+		}
+		
+		int max  = Collections.max(list);
+		
+		int ar[] = new int[max];
+		
+		for(Integer in: arr){
+			ar[in-1]++;
+		}
+		
+		list.clear();
+		
+		for(Integer in: ar){
+			list.add(in);
+		}
+		
+		for(Integer in: list){
+			int index = list.indexOf(Collections.max(list));
+			int count = list.get(index);
+			for(int i=0; i<count; i++){
+				System.out.print((index+1) +" " );
+			}
+			list.set(index,0);
+		}
+		System.out.println();
+	}
+
+	//Longest consecutive subsequence
+	//question link:- https://practice.geeksforgeeks.org/problems/longest-consecutive-subsequence2449/1
+
+	static int findLongestConseqSubseq(int arr[], int N){
+
+		int curr = 1;
+		int max = 1;
+
+		//creating an empty tree set to store each element
+		TreeSet<Integer> tree = new TreeSet<>();
+
+		for(int i=0; i<N; i++){
+			tree.add(arr[i]);
+		}
+
+		Iterator it = tree.iterator();
+
+		int i =0;
+		while(it.hasNext() && i<N){
+			arr[i++] = (int) it.next();
+		}
+
+		for( i=0; i<N-1; i++){
+			if(arr[i]+1 == arr[i+1]){
+				curr++;
+				max = Math.max(max, curr);
+			}else{
+				curr=1;
+			}
+		}
+
+		return max;
+		
+	}
+	
+
 	
 }
