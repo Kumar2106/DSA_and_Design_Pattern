@@ -4,9 +4,10 @@ import java.util.*;
 
 public class Hello {
     public static void main(String[] args) throws IOException {
-		int arr[] ={2,6,1,9,4,5,3};
-		int N = arr.length;
-		System.out.print(findLongestConseqSubseq(arr, N));
+		int arr[] ={ 1, 4, 20, 3, 10, 5};
+		int n = arr.length;
+		int sum = 33;
+		System.out.println(subArraySum(arr, n, sum));
 		
 
     }
@@ -572,6 +573,60 @@ public class Hello {
 
 		return max;
 		
+	}
+
+	//check if two arrays are equal or not
+	//question link: https://practice.geeksforgeeks.org/problems/check-if-two-arrays-are-equal-or-not3847/1
+
+	static boolean check(long A[], long B[], int N){
+
+		//store element of array A along with the frequency of element
+		TreeMap<Long,Integer> map1 = new TreeMap<>();
+
+		//store elment of array B along with the frequency of element
+		TreeMap<Long, Integer> map2 = new TreeMap<>();
+
+		for(int i=0; i<N; i++){
+			map1.put(A[i], map1.getOrDefault(A[i], 0)+1);
+			map2.put(B[i], map2.getOrDefault(B[i], 0)+1);
+		}
+
+		Set<Map.Entry<Long,Integer>> entries = map1.entrySet();
+
+		for(Map.Entry<Long,Integer> entry: entries){
+			long key1 = entry.getKey();
+			
+			if( map2.containsKey(key1)){
+				int value2 = map2.get(key1);
+				int value1 = map1.get(key1);
+				if(value1 != value2){
+					return false;
+				}
+			}else{
+				return false;
+			}
+		}
+		return true;
+	}
+
+	//subarrays with given Sum
+	//question link: https://practice.geeksforgeeks.org/problems/subarray-range-with-given-sum2804/1
+
+	static int subArraySum_B(int arr[], int n, int sum){
+
+		int count =0;
+
+		for(int i=0; i<n; i++){
+			int curr =arr[i];
+
+			for(int j=i; j<n; j++){
+				curr+= arr[j];
+				if(curr == sum)
+				count++;
+			}
+		}
+		
+		return count;
 	}
 	
 
