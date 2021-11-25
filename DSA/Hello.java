@@ -4,11 +4,9 @@ import java.util.*;
 
 public class Hello {
     public static void main(String[] args) throws IOException {
-		int arr[] ={ 1, 4, 20, 3, 10, 5};
-		int n = arr.length;
-		int sum = 33;
-		System.out.println(subArraySum(arr, n, sum));
 		
+		String str = "1abc23";
+		findSum(str);
 
     }
 
@@ -628,7 +626,87 @@ public class Hello {
 		
 		return count;
 	}
+
+	//check if string is rotated by two places
+	//question link:- https://practice.geeksforgeeks.org/problems/check-if-string-is-rotated-by-two-places-1587115620/1
 	
+	public static boolean isRotated(String str1, String str2)
+    {
+        //str2 to be rotated
+        
+        
+        StringBuilder str = new StringBuilder();
+        
+        for(int i=2; i<str2.length(); i++){
+            str.append(str2.charAt(i));
+        }
+        
+        //appending the character at 0 index and 1st index
+        str.append(str2.charAt(0));
+        str.append(str2.charAt(1));
+        
+        
+        String result = str.toString();
+
+		System.out.println("Result string "+ result);
+		System.out.println("str1 "+str2);
+        
+        
+        for(int i=0; i<result.length() && i<str1.length(); i++ ){
+            
+            if(result.charAt(i) != str1.charAt(i)){
+                return false;
+            }
+        }
+        
+        return true;
+    }
+
+	//utility function to print string array
+	static void printStringArray(String arr[]){
+		for(int i=0; i<arr.length; i++){
+			System.out.println(arr[i]+" ");
+		}
+		System.out.println("");
+	}
+
+	//Reverse words in a given string
+	//question link:- https://practice.geeksforgeeks.org/problems/reverse-words-in-a-given-string5459/1
+
+	 static String reverseWords(String S)
+    {
+        String splits[] = S.split("\\.");
+		System.out.println(splits.length == 0);
+		printStringArray(splits);
+		
+        
+        StringBuilder str = new StringBuilder();
+        
+        for(int i=splits.length-1; i>=0; i--){
+            str.append(splits[i]);
+            
+			if(i!=0){
+				str.append(".");
+			}
+        }
+        
+        return str.toString();
+    }
+
+	//Sum of numbers in String
+	//question link:- https://practice.geeksforgeeks.org/problems/sum-of-numbers-in-string-1587115621/1
+
+	static long findSum(String str){
+		long sum =0;
+
+		String num[] = str.split("[a-z]");
+		for(int i=0; i<num.length; i++){
+			if(num[i].equals("")){
+				System.out.println("Blank space");
+			}
+		}
+		return sum;
+	}
 
 	
 }
