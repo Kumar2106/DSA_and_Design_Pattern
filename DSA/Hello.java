@@ -4,9 +4,8 @@ import java.util.*;
 
 public class Hello {
     public static void main(String[] args) throws IOException {
+		System.out.println((int) 'a');
 		
-		String str = "1abc23";
-		findSum(str);
 
     }
 
@@ -701,12 +700,92 @@ public class Hello {
 
 		String num[] = str.split("[a-z]");
 		for(int i=0; i<num.length; i++){
-			if(num[i].equals("")){
-				System.out.println("Blank space");
+			if(!num[i].equals("")){
+				sum += Integer.parseInt(num[i]);
 			}
 		}
 		return sum;
 	}
 
+
+	//Smallest window in a string containing all the characters of another string
+	//question link:- https://practice.geeksforgeeks.org/problems/smallest-window-in-a-string-containing-all-the-characters-of-another-string-1587115621/1
+	public static String smallestWindow(String s, String p ){
+		  int no_of_chars = 256;
+
+		//Function to find smallest
+		//window containing
+		//all characters of 'pat'
+
+		//length of String s
+		int lenS = s.length();
+
+		//length of String p
+		int lenP = p.length();
+
+		//check if string's length is
+		//less thatn pattern's 
+		//length. If yes then no such
+		//window can exist
+
+		if(lenS < lenP){
+			return "-1";
+		}
+
+		int hash_pat[] = new int[no_of_chars];
+		int hash_str[] = new int[no_of_chars];
+
+		//store occurence ofs 
+		//characters of pattern
+		for(int i=0; i<lenP; i++){
+			hash_pat[p.charAt(i)]++;
+		}
+
+		int start =0, start_index = -1,min_len = Integer.MAX_VALUE;
+
+		//start traversing the string
+		//count of characters
+		int count =0;
+		for(int j=0; j<lenS; j++){
+			
+			//count occurrences of characters
+			//of string
+			hash_str[s.charAt(j)]++;
+
+			//If string's char matches
+			//with pattern's char
+			//then increment count
+
+			if(hash_str[s.charAt(j)] <= hash_pat[s.charAt(j)]){
+				count++;
+			}
+
+			//If all the characters are matched
+			if(count == lenP){
+				//Try to minimize the window
+				while(hash_str[s.charAt(start)] > hash_pat[s.charAt(start)] || hash_pat[s.charAt(start)] == 0){
+					if(hash_str[s.charAt(start)] > hash_pat[s.charAt(start)])
+					hash_str[s.charAt(start)]--;
+
+					start++;
+				}
+
+				//update window size
+				int len_window = j-start+1;
+				if(min_len > len_window){
+					min_len = len_window;
+					start_index = start;
+				}
+
+			}
+		}
+
+		//If no window found
+		if(start_index == -1){
+			return "-1";
+		}
+
+		return  s.substring(start_index, start_index+min_len);
+	}
 	
 }
