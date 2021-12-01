@@ -4,7 +4,15 @@ import java.util.*;
 
 public class Hello {
     public static void main(String[] args) throws IOException {
-		System.out.println((int) 'a');
+		Node first = new Node(4);
+		first.next = new Node(5);
+
+		Node second = new Node(3);
+		second.next = new Node(4);
+		second.next.next = new Node(5);
+
+		Node result =	addTwoLists(first, second);
+		printLinkedList(result);
 		
 
     }
@@ -787,5 +795,156 @@ public class Hello {
 
 		return  s.substring(start_index, start_index+min_len);
 	}
+
+	//Node class
+	static class Node{
+		int data;
+		Node next;
+
+		Node(int data){
+			this.data = data;
+			this.next = null;
+		}
+	}
+
+	//Remove duplicates from an unsorted Linked list
+	//question link: https://practice.geeksforgeeks.org/problems/remove-duplicates-from-an-unsorted-linked-list/1
+
+	//Check if Linked List is Palindrome
+	//question link: https://practice.geeksforgeeks.org/problems/check-if-linked-list-is-pallindrome/1
+
+	static boolean isPalindrome(Node head){
+
+		if(head.next == null){
+			return true;
+		}
+
+		//size of the linked list
+		int size =0;
+
+		Node curr = head;
+
+		while(curr != null){
+			curr = curr.next;
+			size++;
+		}
+
+		System.out.println("size"+size);
+
+		boolean iseven = false;
+		if(size % 2 == 0){
+			iseven = true;
+		}
+
+		int lef_size = size/2;
+		int left_sum =0;
+		curr = head;
+
+		int index =0;
+		while(curr != null && index != lef_size){
+			left_sum += curr.data;
+			curr = curr.next;
+			index++;
+		}
+
+		System.out.println("left sum" + left_sum);
+
+		if(!iseven){
+			System.out.println("size is odd");
+			curr = curr.next;
+			index++;
+		}
+
+		int right_sum =0;
+
+		while(curr != null && index != size){
+			right_sum += curr.data;
+			curr = curr.next;
+			index++;
+		}
+
+		System.out.println("Right sum "+ right_sum);
+
+		if(left_sum == right_sum){
+			return true;
+		}
+		return false;
+	}
+
+	//LRU CACHE implementation
+	static class LRUcache{
+		static LinkedHashMap<Integer,Integer> map;
+		private final int CAPACITY;
+
+		LRUcache(int cap){
+			this.CAPACITY = cap;
+			map = new LinkedHashMap<Integer,Integer>(cap,0.75f, true){
+				protected boolean removeEldestEntry(Map.Entry eldest){
+					return size() > CAPACITY;
+				}
+			};
+
+		}
+
+		public static int get(int key){
+			return map.getOrDefault(key, -1);
+		}
+
+		public static void set(int key, int value){
+			map.put(key, value);
+		}
+	}
+
+	//Add two numbers represented by linked lists
+	//question link: https://practice.geeksforgeeks.org/problems/add-two-numbers-represented-by-linked-lists/1
 	
+	static Node addTwoLists(Node first, Node second){
+		Node temp1 = first;
+		Node temp2 = second;
+
+		int f_num = temp1.data;
+		int s_num = temp2.data;
+
+		temp1 = temp1.next;
+		while(temp1 != null){
+			int data = temp1.data;
+			f_num= (f_num*10)+data;
+			temp1 = temp1.next;
+		}
+
+		temp2 = temp2.next;
+		while(temp2 != null){
+			int data = temp2.data;
+			s_num = (s_num*10)+data;
+			temp2 = temp2.next;
+		}
+
+		int result = f_num+s_num;
+		String num = Integer.toString(result);
+		
+		Node output = null;
+		Node curr = null;
+
+		for(int i=0; i<num.length(); i++){
+			Node insert = new Node(num.charAt(i) - 48);
+			if(output == null && curr == null){
+				output=curr=insert;
+			}else{
+				curr.next = insert;
+				curr = curr.next;
+			}
+		}
+
+		return output;
+	}
+
+
+	//utility function for printing all the nodes of linked list
+	static void printLinkedList(Node head){
+		Node curr = head;
+		while(curr != null){
+			System.out.print(curr.data+" ");
+			curr = curr.next;
+		}
+	}
 }
