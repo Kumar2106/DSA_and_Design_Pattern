@@ -4,15 +4,10 @@ import java.util.*;
 
 public class Hello {
     public static void main(String[] args) throws IOException {
-		Node first = new Node(4);
-		first.next = new Node(5);
-
-		Node second = new Node(3);
-		second.next = new Node(4);
-		second.next.next = new Node(5);
-
-		Node result =	addTwoLists(first, second);
-		printLinkedList(result);
+		String S ="batmanandrobinarebat";
+		String pat ="bat";
+		ArrayList<Integer> result = search(pat, S);
+		printArrayListOfInteger(result);
 		
 
     }
@@ -895,6 +890,8 @@ public class Hello {
 		}
 	}
 
+	
+
 	//Add two numbers represented by linked lists
 	//question link: https://practice.geeksforgeeks.org/problems/add-two-numbers-represented-by-linked-lists/1
 	
@@ -946,5 +943,265 @@ public class Hello {
 			System.out.print(curr.data+" ");
 			curr = curr.next;
 		}
+	}
+
+	static class Nodearb{
+		int data;
+		Nodearb next,arb;
+
+		Nodearb(int data){
+			this.data = data;
+			next=arb = null;
+		}
+	}
+
+	//clone a linked list with next and random pointer
+	//question link: https://practice.geeksforgeeks.org/problems/clone-a-linked-list-with-next-and-random-pointer/1
+
+	Nodearb copyList(Nodearb head){
+		Nodearb curr = head;
+
+		//Inserting new nodes between the original linkedList
+		while(curr != null){
+			Nodearb temp = curr.next;
+			curr.next = new Nodearb(curr.data);
+			curr.next.next = temp;
+			curr= temp;
+		}
+
+		curr = head;
+
+		//Setting Random pointers of new nodes
+		while(curr != null){
+			curr.next.arb = (curr.arb != null) ? curr.arb.next:null;
+			curr = curr.next.next;
+		}
+
+		Nodearb orig = head,copy=head.next;
+		Nodearb temp = copy;
+
+		//Separating both the linkedListr
+
+		while(orig != null){
+			orig.next = orig.next.next;
+			copy.next = (copy.next != null) ? copy.next.next
+		}
+	}
+
+	//Nth number made of prime digits
+	//question link:- https://practice.geeksforgeeks.org/problems/nth-number-made-of-prime-digits4319/1
+
+	public static String primeDigits(int n){
+		
+		int rem;
+		String num = "";
+		while(n > 0){
+			//remainder for check element position
+			rem = n %4;
+			switch(rem){
+				//if number is 1st position in tree
+				case 1:
+				num+='2';
+				break;
+
+				case 2:
+				num+= '3';
+				break;
+
+				case 3:
+				num+='5';
+				break;
+
+				case 0:
+				num+='7';
+				break;
+
+			}
+			if(n % 4 == 0){
+				n--;
+			}
+			n = n/4;
+		}
+		return new StringBuilder(num).reverse().toString();
+	}
+
+	//case-specific sorting of Strings
+	public static String caseSort(String str)
+    {
+       String cap="";
+       String low="";
+       
+       for(int i=0; i<str.length(); i++){
+           if(str.charAt(i) >='A' && str.charAt<= 'Z' ){
+               cap+=str.charAt(i);
+           }else{
+               low+=str.charAt(i);
+           }
+       }
+       
+       char l[] = low.toCharArray();
+       char u[] = cap.toCharArray();
+       
+       Arrays.sort(l);
+       Arrays.sort(u);
+       
+       int low_index =0;
+       int cap_index =0;
+       
+       String result = "";
+       
+       for(int i=0; i<str.length(); i++){
+           if(str.charAt(i) >='A' && str.charAt(i)<='Z'){
+               result+=u[cap_index++];
+           }else{
+               result+=l[low_index++];
+           }
+       }
+       
+       return result;
+    }
+
+	//Lexicographic Rank of A String
+	//question link: https://practice.geeksforgeeks.org/problems/rank-the-permutations2229/0/?fbclid=IwAR1-LviPWYNxRrzmmpjsLuUgrKK4ODge33xxDaiF8NjNFbo9CWbF4OZd3xc#	
+	static int findRank(String str){
+		int len = str.length();
+		int mul = fact(len);
+		int rank =1;
+		int countRight;
+
+		for(int i=0; i<len; i++){
+			mul/=len-i;
+
+			//count number of chars smaller
+			//than str[i] from str[i+1] to
+			//str[len-1]
+			countRight = findSmallerInRight(str, i, len-1);
+			rank+=countRight * mul;
+		}
+
+		return rank;
+
+	}
+
+	//A utility function to count smaller
+	//characters on right of arr[low]
+	static int findSmallerInRight(String str, int low,int high){
+		int countRight=0,i;
+		
+		for(i=low+1; i<=high; i++){
+			if(str.charAt(i) <str.charAt(low))
+			++countRight;
+		}
+		return countRight;
+	}
+
+	//utility function for calculating factorial
+	static int fact(int num){
+		if(num == 1 || num == 0){
+			return 1;
+		}
+
+		return num*fact(num-1);
+	}
+
+	//Search Pattern(Rabin-Karp Algorithm)
+	//question link: https://practice.geeksforgeeks.org/problems/31272eef104840f7430ad9fd1d43b434a4b9596b/1/
+
+	static ArrayList<Integer> search(String pat, String S){
+
+		ArrayList<Integer> result = new ArrayList<>();
+
+		int M = pat.length();
+		int N = S.length();
+
+		for(int i=0; i<=N-M; i++){
+			int j;
+
+			for(j=0; j<M; j++){
+				if(S.charAt(i+j) != pat.charAt(j)){
+					break;
+				}
+			}
+
+			if(j==M){
+				result.add(i+1);
+			}
+		}
+
+		return result;
+	}
+
+	//utility function to print arraylist of integer
+	static void printArrayListOfInteger(ArrayList<Integer> result){
+		for(int i=0; i<result.size(); i++){
+			System.out.print(result.get(i)+" ");
+		}
+		System.out.println("");
+	}
+
+	//Rabin karp Algorithm for pattern Searching
+	static ArrayList<Integer> searchRKP(String pat, String S){
+		ArrayList<Integer> result = new ArrayList<>();
+
+		//d is the number of characters in the input alphabet
+		int d = 256;
+
+		//q is a prime number
+		int q = 101;
+
+		//length of the pat string
+		int M = pat.length();
+
+		//length of the S string
+		int N = S.length();
+
+		int i,j;
+		int p=0; //hash valuee for pattern
+		int t=0; //hash value for txt;
+		int h =1;
+
+		//The value of h would be "pow(d,M-1)%q"
+		for( i=0; i<M-1; i++){
+			h =(h*d)%q;
+		}
+
+		//calculate the hash value of pattern and first
+		//window of text
+		for(i=0; i<M; i++){
+			p = (d*p +pat.charAt(i))%q;
+			t = (d*t +S.charAt(i))%q;
+		}
+
+		//Slide the pattern over text one by one
+		for( i=0; i<=N-M; i++){
+			//check the hash values of current window of text
+			//and pattern. If the hash values match then only
+			//check for characters on by one
+			if(p == t){
+				//check for characters one by one
+				for(j=0; j<M; j++){
+					if(S.charAt(i+j) != pat.charAt(j)){
+						break;
+					}
+				}
+
+				if(j==M){
+					result.add(i+1);
+				}
+			}
+
+			//Calculate hash value for next window of text: remove
+			//leading digit, add trailing digit
+			if(i<N-M){
+				t = (d*(t-S.charAt(i)*h) +S.charAt(i+M))%q;
+				
+				//we might get negative value of t, converting it 
+				//to positive
+				if(t<0){
+					t=(t+q);
+				}
+			}
+		}
+		return result;
 	}
 }
