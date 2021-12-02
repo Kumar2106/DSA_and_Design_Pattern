@@ -1,12 +1,13 @@
 package DSA;
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class Hello {
     public static void main(String[] args) throws IOException {
 		String S ="batmanandrobinarebat";
 		String pat ="bat";
-		ArrayList<Integer> result = search(pat, S);
+		ArrayList<Integer> result = searchKMP(pat, S);
 		printArrayListOfInteger(result);
 		
 
@@ -1203,5 +1204,89 @@ public class Hello {
 			}
 		}
 		return result;
+	}
+
+	//Search Pattern (KMP-Algorithm)
+	//question link:- https://practice.geeksforgeeks.org/problems/search-pattern0205/1
+
+	static ArrayList<Integer> searchKMP(String pat, String txt){
+		ArrayList<Integer> result = new ArrayList<>();
+
+		//length of the pat String
+		int M = pat.length();
+
+		//length of the txt string
+		int N = txt.length();
+
+		//create lps[] that will hold the longest 
+		//prefix suffix values for pattern
+
+		int lps[] = new int[M];
+
+
+		//preprocess the pattern (calculate lps[] )
+		//array
+		computeLPSArray(pat, M, lps);
+
+		int i=0; //index for txt;
+		int j=0; //index for pat;
+
+		while(i<N){
+			if(pat.charAt(j) == txt.charAt(i)){
+				j++;
+				i++;
+			}
+
+			if(j==M){
+				result.add(i-j+1);
+				j=lps[j-1];
+			}
+
+			//mismatch after j matches
+			else if(i<N && pat.charAt(j) != txt.charAt(i)){
+				//Do not match lps[0..lps[j-1]] characters,
+				//they will match anyway
+				if(j != 0)
+				j= lps[j-1];
+				else
+				i = i+1;
+			}
+		}
+		
+		return result;
+	}
+
+	//utility function for KMP pattern searching algorithm
+	static void computeLPSArray(String pat, int M, int lps[]){
+		//length of the previous longest prefix suffix
+		int len =0;
+		int i=1;
+		lps[0] = 0;//lps[0] is always 0
+
+		//the loop calculates lps[i] for i =1 to M-1
+		while(i<M){
+			if(pat.charAt(i) ==pat.charAt(len)){
+				len++;
+				lps[i] =len;
+				i++;
+			}else{
+				// (pat[i] != pat[len])
+
+				//This is tricky. Consider the example.
+				//AAACAAAA and i =7. the idea is similar
+				//to search step.
+
+				if(len != 0){
+					len = lps[len-1];
+
+					//Also, note that we do not increment 
+					//i here
+				}else{
+					//if(len ==0)
+					lps[i] =len;
+					i++;
+				}
+			}
+		}
 	}
 }
