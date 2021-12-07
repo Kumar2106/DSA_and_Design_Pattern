@@ -5,10 +5,9 @@ import java.util.*;
 
 public class Hello {
     public static void main(String[] args) throws IOException {
-		String S ="batmanandrobinarebat";
-		String pat ="bat";
-		ArrayList<Integer> result = searchKMP(pat, S);
-		printArrayListOfInteger(result);
+		long hist[] = {7,2,8,9,1,3,6,5};
+		long n = hist.length;
+		System.out.println(getMaxArea(hist, n));
 		
 
     }
@@ -1288,5 +1287,53 @@ public class Hello {
 				}
 			}
 		}
+	}
+
+	//Stock span Problem
+	//question link:- https://practice.geeksforgeeks.org/problems/stock-span-problem-1587115621/1
+	public static int[] calculateSpan(int price[], int n){
+		int result[] = new int[n];
+
+		//span value of first day is always 1
+		result[0]=1;
+
+		//intializing span value
+		for(int i=1; i<n; i++){
+			result[i] =1;
+			for(int j=i-1; (j>=0) && (price[i]>= price[j]); j--){
+				result[i]++;
+			}
+		}
+
+		return result;
+	}
+
+	//Naive Approach
+	//Maximum rectangular area in a histogram
+	//question link:- https://practice.geeksforgeeks.org/problems/maximum-rectangular-area-in-a-histogram-1587115620/1
+	public static long getMaxArea(long hist[], long n){
+		int size = (int) n;
+
+		Long area = Long.MIN_VALUE;
+
+		for(int i=0; i<size; i++){
+			int j;
+			//max area in this window
+			Long curr_arr  = Long.MIN_VALUE;
+
+			//minimum height of the pillar in this window
+			Long min_height =  Long.MAX_VALUE;
+			for(j=i; j<size; j++){
+				min_height = Math.min(min_height, hist[j]);
+			}
+
+			curr_arr = min_height*(j-i+1);
+			area = Math.max(curr_arr, area);
+			curr_arr=Long.MIN_VALUE;
+			min_height = Long.MAX_VALUE;
+
+			
+		}
+		return area;
 	}
 }
