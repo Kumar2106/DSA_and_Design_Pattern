@@ -5,9 +5,8 @@ import java.util.*;
 
 public class Hello {
     public static void main(String[] args) throws IOException {
-		long hist[] = {7,2,8,9,1,3,6,5};
-		long n = hist.length;
-		System.out.println(getMaxArea(hist, n));
+		ArrayList<String> list = generate(5);
+		printArrayListOfString(list);
 		
 
     }
@@ -1335,5 +1334,115 @@ public class Hello {
 			
 		}
 		return area;
+	}
+
+	//Naive Approach
+	//The Celebrity Problem
+	//question link:- https://practice.geeksforgeeks.org/problems/the-celebrity-problem/1
+
+	static void celebrity(int M[][], int n){
+
+	}
+
+	//Naive Approach
+	//Maximum of minimum for every window size (Hard)
+	//question link:- https://practice.geeksforgeeks.org/problems/maximum-of-minimum-for-every-window-size3453/1
+	static int[] maxOfMin(int[] arr, int n){
+		//returning result
+		int[] result = new int[n];
+
+		//number of possible window
+		int possible_window =1;
+
+		for(int i=n; i>=1; i--){
+
+			//list will store all the possible window size
+			ArrayList<ArrayList<Integer>> list = new ArrayList<>();
+
+			for(int j=0; j<possible_window; j++){
+				list.add(new ArrayList<>());
+			}
+			int last_index = i-1;
+			ArrayList<Integer> min_list;
+
+			for(int j=0; j<possible_window; j++){
+				ArrayList<Integer> alist = list.get(j);
+
+				for(int k=last_index; k>=n-i+1; k--){
+					alist.add(arr[k]);
+				}
+
+				list.set(j, alist);
+
+				
+
+
+			}
+
+
+
+			//increasing possible window size
+			possible_window++;
+
+		}
+
+		return result;
+	}
+
+	//Queue Operation
+	//Question link:- https://practice.geeksforgeeks.org/problems/queue-operations/1
+	static int findFrequency(Queue<Integer> queue, int k){
+		Queue<Integer> temp = new LinkedList<Integer>();
+
+		int count =0;
+		while(!queue.isEmpty()){
+
+		}
+		for(int i=0; i<temp.size(); i++){
+			queue.add(temp.poll());
+		}
+
+		return count;
+	}
+
+	//Naive Approach
+	//Generate Binary numbers
+	//question link:- https://practice.geeksforgeeks.org/problems/generate-binary-numbers-1587115620/1
+	static ArrayList<String> generate(int N){
+		ArrayList<String> result = new ArrayList<>();
+
+		for(int i=0; i<N; i++){
+			result.add(Integer.toString(i,2));
+		}
+
+		return result;
+	}
+
+	//utility function to print ArrayList of String values
+	static void printArrayListOfString(ArrayList<String> list){
+		for(int i=0; i<list.size(); i++){
+			System.out.print(list.get(i) +" ");
+		}
+		System.out.println("");
+	}
+
+	//Optimized solution 
+	//Generated binary Numbers
+    //question link:- https://practice.geeksforgeeks.org/problems/generate-binary-numbers-1587115620/1
+	static ArrayList<String> generateOptimized(int N){
+		Queue<String> queue = new LinkedList<>();
+		ArrayList<String> result = new ArrayList<>();
+
+		queue.add("1");
+
+		while(N-- > 0){
+			String s1 = queue.poll();
+			result.add(s1);
+
+			queue.add(s1+"0");
+			queue.add(s1+"1");
+		}
+
+		return result;
 	}
 }
