@@ -1445,4 +1445,32 @@ public class Hello {
 
 		return result;
 	}
+
+	//Optimized solution 
+	//Circular tour
+	//question link: https://practice.geeksforgeeks.org/problems/circular-tour/1
+
+	int tour(int petrol[], int distance[]){
+		int n = petrol.length;
+
+		int start =0;
+		int end =1;
+
+		int curr_petrol = petrol[start] - distance[start];
+		//If current amount of petrol in truck becomes less than 0, then
+		//remove the starting petrol pump from tour
+		while(end != start || curr_petrol<0){
+			//If current amount of petrol in truck become less than 0, then
+			//remove the starting petrol pump from tour
+
+			while(curr_petrol<0 && start != end){
+				
+			}
+
+		}
+
+		//Return starting point
+		return start;
+	}
+
 }
