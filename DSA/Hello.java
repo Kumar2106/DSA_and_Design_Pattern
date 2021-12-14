@@ -5,10 +5,10 @@ import java.util.*;
 
 public class Hello {
     public static void main(String[] args) throws IOException {
-		ArrayDeque<Integer> queue = new ArrayDeque<Integer>();
-		queue.addFirst(1);
-		queue.getFirst();
-		
+		int arr[] = {1,2,3,4,5};
+		int n = arr.length;
+		ArrayDeque<Integer> queue = insert(arr, n);	
+		PrintArrayDeque(queue);	
 
     }
 
@@ -1472,6 +1472,25 @@ public class Hello {
 
 		//Return starting point
 		return start;
+	}
+
+	//utility function to print arrayDeque
+	static void PrintArrayDeque(ArrayDeque<Integer> arrayDeque){
+		for ( Integer i : arrayDeque) {
+			System.out.print(i+" ");
+		}
+		System.out.println("");
+	}
+
+
+	//Insertion in dequeue
+	static ArrayDeque<Integer> insert(int arr[], int n){
+		ArrayDeque<Integer> result = new ArrayDeque<>();
+		for(int i=0; i<n; i++){
+			result.add(arr[i]);
+		}
+
+		return result;
 	}
 
 }
