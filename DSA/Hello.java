@@ -5,8 +5,9 @@ import java.util.*;
 
 public class Hello {
     public static void main(String[] args) throws IOException {
-		ArrayList<String> list = generate(5);
-		printArrayListOfString(list);
+		ArrayDeque<Integer> queue = new ArrayDeque<Integer>();
+		queue.addFirst(1);
+		queue.getFirst();
 		
 
     }
